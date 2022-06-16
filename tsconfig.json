@@ -5,8 +5,8 @@
   "display": "Node 16 + ESM + Strictest",
   "compilerOptions": {
     "lib": ["es2021"],
-    "module": "es2022",
-    "target": "es2021",
+      "module": "commonjs",
+      "target": "es2021",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -21,8 +21,10 @@
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "importsNotUsedAsValues": "error",
+//    "importsNotUsedAsValues": "error",
     "checkJs": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "useUnknownInCatchVariables": false
   }
 }
+
