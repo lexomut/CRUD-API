@@ -6,8 +6,8 @@
     "scripts": {
         "start": "ts-node --esm ./src/index.ts",
         "start:dev": "nodemon",
-        "start:prod": "tsc && node ./src/index.ts",
-        "watch": "nodemon --delay 700ms ",
+        "start:prod": "tsc && node ./build/index.js",
+        "watch": "nodemon",
         "lint": "eslint src --ext .ts,.js",
         "build": "tsc",
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,10 +15,10 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@types/node": "^18.0.0",
         "@types/uuid": "^8.3.4",
         "@typescript-eslint/eslint-plugin": "^5.28.0",
         "@typescript-eslint/parser": "^5.28.0",
-        "eslint": "^5.16.0",
         "nodemon": "^2.0.16",
         "ts-node": "^10.8.1",
         "typescript": "^4.7.3",

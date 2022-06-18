@@ -1,5 +1,5 @@
 import { parse } from 'url';
-import { IncomingMessage, ServerResponse } from 'http';
+import type { IncomingMessage, ServerResponse } from 'http';
 import { Hendler } from './hendler';
 
 

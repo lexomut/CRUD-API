@@ -1,23 +1,19 @@
-import 'dotenv/config';
-import * as http from 'http';
-import { router } from './router';
+import cluster from
+        'cluster';
+import os from 'os';
+import { start } from './worker';
 
+const pid = process.pid;
 
-const {PORT} = process.env;
-const server = http.createServer(router);
-
-
-server.on('error', function () {
-    console.log('ошибка');
-    setTimeout(() => server.listen(PORT), 2000);
-});
-
-// process.once('SIGHUP', () => {
-//     server.close();
-// });
-server.listen(PORT,() => {
-    console.log('server run on port',PORT );
-});
-
-
-console.log('1234567  ', PORT);
+if (cluster.isPrimary) {
+    const cpuCount = os.cpus().length;
+    console.log('cpus: ', cpuCount);
+    console.log('Primary started pid:', pid);
+    for (let i = 0; i < cpuCount; i++) {
+        const worker = cluster.fork();
+        worker.on('exit', () => console.log(`worker pid ${pid} is exit`));
+    }
+}
+if (cluster.isWorker) {
+    start();
+}
