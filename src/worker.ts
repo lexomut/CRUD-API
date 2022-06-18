@@ -4,19 +4,21 @@ import { router } from './router';
 
 
 const {PORT} = process.env;
-const server = http.createServer(router);
+export const server = http.createServer(router);
 
-export const start= () => {
-    server.on('error', function () {
-        console.log('ошибка');
-        setTimeout(() => server.listen(PORT), 2000);
-    });
+export const start = () => {
+    return new Promise(resolve => {
+        server.on('error', (e) => {
+            console.log('ошибка',e);
+            // setTimeout(() => server.listen(PORT), 2000);
+        });
 
-    // process.once('SIGHUP', () => {
-    //     server.close();
-    // });
-    server.listen(PORT,() => {
-        console.log('server run on port',PORT );
+        server.listen(PORT, () => {
+            console.log('server run on port', PORT);
+            resolve(null);
+        });
     });
 };
+
+
 

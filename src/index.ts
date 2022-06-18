@@ -1,6 +1,5 @@
-import cluster from
-        'cluster';
-import os from 'os';
+import cluster from 'cluster';
+import * as os from 'os';
 import { start } from './worker';
 
 const pid = process.pid;
