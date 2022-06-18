@@ -1,4 +1,3 @@
-
 export type Person = {
     'id': string
     'username': string
@@ -6,7 +5,7 @@ export type Person = {
     'hobbies': string[]
 }
 export type PersonKeys = 'id' | 'username' | 'age' | 'hobbies'
-export enum fields {id = 'string', username = 'string', age = 'number', hobbies = 'array'}
+export enum fields {id = 'string', username = 'string', age = 'number', hobbies = 'object'}
 
 export type DatabaseResponse = {
     code:number
