@@ -16,10 +16,7 @@ test('два плюс два равно четыре', () => {
 });
 
 it('should be no users', async () => {
-
     const response = await request(server).get('/api/users/');
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual([]);
-
-
 });
