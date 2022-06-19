@@ -4,7 +4,7 @@ import { Handler } from './handler';
 import { router } from './router';
 
 
-const {PORT} = process.env;
+const {PORT} = process.env || 4444;
 export const handler = new Handler();
 export const server = http.createServer(router);
 
