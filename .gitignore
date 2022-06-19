@@ -12,8 +12,8 @@ wbx-vue-catalog/dist
 *pipeline.conf
 
 # local env files
-.env.local
-.env.*.local
+#.env.local
+#.env.*.local
 
 # Log files
 npm-debug.log*

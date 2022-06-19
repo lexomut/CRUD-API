@@ -1,6 +1,7 @@
-import { changedUser, testUser } from './test-user';
-import { start, server } from '../src/worker';
-import { Person } from '../src/types';
+
+import { start, server } from '../worker';
+import { Person } from '../types';
+import { changedUser, testUser } from './user';
 
 const request = require('supertest');
 

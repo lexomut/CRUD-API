@@ -1,9 +1,9 @@
 import { parse } from 'url';
 import type { IncomingMessage, ServerResponse } from 'http';
-import { Hendler } from './hendler';
+import { Handler } from './handler';
 
 
-const handler = new Hendler();
+const handler = new Handler();
 
 export const router = async (req: IncomingMessage, res: ServerResponse) => {
     const reqUrl = parse(req.url || '', true).pathname;
@@ -17,13 +17,12 @@ export const router = async (req: IncomingMessage, res: ServerResponse) => {
     switch (req.method) {
         case 'GET': {
             try {
-                const {code, body} =id?await handler.get(id):await handler.getAll();
+                const {code, body} = id ? await handler.get(id) : await handler.getAll();
                 res.setHeader('Content-Type', 'application/json');
                 res.statusCode = code;
                 res.end(JSON.stringify(body));
             } catch (error) {
-                // console.log('ошибка',error.message, ' ', error.code);
-                res.statusCode = error.code||'500';
+                res.statusCode = error.code || '500';
                 res.end(error.message);
             }
             break;
@@ -31,7 +30,7 @@ export const router = async (req: IncomingMessage, res: ServerResponse) => {
 
         case 'POST': {
             try {
-                if(id) {
+                if (id) {
                     res.statusCode = 404;
                     res.end(' non-existing endpoints');
                     return;
@@ -42,16 +41,15 @@ export const router = async (req: IncomingMessage, res: ServerResponse) => {
                 }
                 const data = Buffer.concat(buffers).toString();
                 const payload = JSON.parse(data);
-                if (typeof payload!=='object') {
+                if (typeof payload !== 'object') {
                     throw new Error('payload is not object');
                 }
-                const {code, body} =await handler.add(payload);
+                const {code, body} = await handler.add(payload);
                 res.setHeader('Content-Type', 'application/json');
                 res.statusCode = code;
                 res.end(JSON.stringify(body));
             } catch (error) {
-                // console.log(error);
-                res.statusCode = error.code||'500';
+                res.statusCode = error.code || '500';
                 res.end(error.message);
             }
             break;
@@ -65,27 +63,24 @@ export const router = async (req: IncomingMessage, res: ServerResponse) => {
                 }
                 const data = Buffer.concat(buffers).toString();
                 const payload = JSON.parse(data);
-                const {code, body} =await handler.update(id,payload);
+                const {code, body} = await handler.update(id, payload);
                 res.setHeader('Content-Type', 'application/json');
                 res.statusCode = code;
-                // console.log(JSON.stringify(body));
                 res.end(JSON.stringify(body));
             } catch (error) {
-                // console.log(error);
-                res.statusCode = error.code||'500';
+                res.statusCode = error.code || '500';
                 res.end(error.message);
             }
             break;
         }
         case 'DELETE': {
             try {
-                const {code, body} =await handler.del(id);
+                const {code, body} = await handler.del(id);
                 res.setHeader('Content-Type', 'application/json');
                 res.statusCode = code;
                 res.end(JSON.stringify(body));
             } catch (error) {
-                // console.log(error);
-                res.statusCode = error.code||'500';
+                res.statusCode = error.code || '500';
                 res.end(error.message);
             }
             break;

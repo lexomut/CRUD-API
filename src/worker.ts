@@ -9,8 +9,7 @@ export const server = http.createServer(router);
 export const start = () => {
     return new Promise(resolve => {
         server.on('error', (e) => {
-            console.log('ошибка',e);
-            // setTimeout(() => server.listen(PORT), 2000);
+            console.log('ошибка сервера',e);
         });
 
         server.listen(PORT, () => {

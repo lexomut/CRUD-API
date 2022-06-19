@@ -1,6 +1,6 @@
-import { Person } from '../src/types';
+import { Person } from '../types';
 
-export const testUser:Person = {
+export const testUser: Person = {
     id:'',
     username:'Alexey',
     age:39,

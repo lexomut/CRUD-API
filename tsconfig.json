@@ -82,9 +82,11 @@
         /* Disallow inconsistently-cased references to the same file. */
     },
     "exclude": [
-        "node_modules"
-    ],
-    "include": [
-        "test/**/*"
+        "node_modules",
+        "src/tests",
+        "jest.config.js"
     ]
+//    "include": [
+//        "tests/**/*"
+//    ]
 }
