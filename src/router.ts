@@ -42,6 +42,9 @@ export const router = async (req: IncomingMessage, res: ServerResponse) => {
                 }
                 const data = Buffer.concat(buffers).toString();
                 const payload = JSON.parse(data);
+                if (typeof payload!=='object') {
+                    throw new Error('payload is not object');
+                }
                 const {code, body} =await handler.add(payload);
                 res.setHeader('Content-Type', 'application/json');
                 res.statusCode = code;
@@ -65,7 +68,7 @@ export const router = async (req: IncomingMessage, res: ServerResponse) => {
                 const {code, body} =await handler.update(id,payload);
                 res.setHeader('Content-Type', 'application/json');
                 res.statusCode = code;
-                console.log(JSON.stringify(body));
+                // console.log(JSON.stringify(body));
                 res.end(JSON.stringify(body));
             } catch (error) {
                 // console.log(error);

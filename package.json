@@ -10,7 +10,7 @@
         "watch": "nodemon",
         "lint": "eslint src --ext .ts,.js",
         "build": "tsc",
-        "test": "jest --detectOpenHandles"
+        "test": "jest"
     },
     "author": "",
     "license": "ISC",
