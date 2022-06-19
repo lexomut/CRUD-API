@@ -3,7 +3,7 @@ import * as os from 'os';
 import { start } from './worker';
 
 const pid = process.pid;
-const workers:Worker[] = [];
+const workers: Worker[] = [];
 
 if (cluster.isPrimary) {
     const cpuCount = os.cpus().length;
@@ -18,9 +18,19 @@ if (cluster.isPrimary) {
             }
 
         });
-        worker.on('exit', () => console.log(`worker pid ${pid} is exit`));
+        cluster.on('exit', (worker, code, signal) => {
+            console.log(`worker ${worker.process.pid} died`);
+            const newWorker = cluster.fork();
+            newWorker.on('message', (data) => {
+                if (data.storage) {
+                    messageRelay(data);
+                }
+            });
+            workers.push(newWorker);
+        });
     }
-    function messageRelay (msg:any) {
+
+    function messageRelay(msg: any) {
         workers.forEach((worker) => {
             worker.send(msg);
         });
