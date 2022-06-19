@@ -1,9 +1,10 @@
 import { parse } from 'url';
 import type { IncomingMessage, ServerResponse } from 'http';
-import { Handler } from './handler';
+import { handler } from './worker';
 
 
-const handler = new Handler();
+
+
 
 export const router = async (req: IncomingMessage, res: ServerResponse) => {
     const reqUrl = parse(req.url || '', true).pathname;

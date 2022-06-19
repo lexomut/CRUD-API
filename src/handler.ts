@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 import { DatabaseResponse, fields, Person, PersonKeys } from './types';
-import { storage } from './storage';
 
 class DatabaseError extends Error {
     code: number;
@@ -15,7 +14,18 @@ export class Handler {
     data: Person[];
 
     constructor() {
-        this.data = storage;
+        this.data = [];
+        process.on('message', (data: any) => {
+            if (data.storage) {
+                this.data = data.storage;
+            }
+        });
+    }
+
+    send() {
+        if (process.send) {
+            process.send({storage: this.data});
+        }
     }
 
     add(data: any): Promise<DatabaseResponse> {
@@ -26,6 +36,7 @@ export class Handler {
             return Promise.reject(new DatabaseError({code: 400, body: errors.toString()}));
         }
         this.data.push(person);
+        this.send();
         return Promise.resolve({code: 201, body: person});
     }
 
@@ -38,6 +49,7 @@ export class Handler {
             return Promise.reject(new DatabaseError({code: 404, body: `user Id ${uuid} doesn't exist `}));
         }
         const deleted = this.data.splice(userIndex, 1);
+        this.send();
         return Promise.resolve({code: 204, body: deleted[0] || ''});
 
 
@@ -73,6 +85,7 @@ export class Handler {
             return Promise.reject(new DatabaseError({code: 404, body: `user Id ${uuid} doesn't exist `}));
         }
         this.data[userIndex] = person;
+        this.send();
         return Promise.resolve({code: 200, body: person});
 
 
